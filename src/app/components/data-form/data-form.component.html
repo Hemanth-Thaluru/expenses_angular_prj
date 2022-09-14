@@ -1,0 +1,102 @@
+<h1 class="text-white">Add Expenses</h1>
+<hr>
+<div class="row justify-content-center">
+    <div class="col-md-6 ">
+        <div class="card ">
+            <div class="card-body ">
+                <!-- <form (submit)="addData( newPrice, newDate, newCategory, newType, newDescription)">
+                    
+                    <div class="form-group">
+                        <label> Amount</label>
+                        <input #newPrice type="number" placeholder="Amount in Rupees" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label> Date</label>
+        
+                        <input #newDate type="text" placeholder="Date" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label> Select Category</label>
+                        <select #newCategory (change)="onSelectingCategory($event.target.value)" required class="form-control">
+                            <option value="0">Select category</option>
+                            <option *ngFor="let category of categorys" [value]="category.categoryId">{{category.categoryName}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Select Sub Category</label>
+                        <select required class="form-control">
+                            <option value="Enero">Select Sub category</option>
+                            <option *ngFor="let subcategory of subCategories" [value]="subcategory.subCategoryId">
+                                {{subcategory.subCategoryName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select #newType name="select" required class="form-control">
+                            <option value="Income">Income</option>
+                            <option value="Expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Purpose of Expense/ Income Source</label>
+                        <textarea #newDescription style="resize: none;" cols="30" rows="1" class="form-control" required
+                            placeholder="Description"></textarea>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-dark mt-3 mr-4 col-md-3">Submit</button>
+                        <button type="submit" class="btn btn-dark mt-3 ml-4  col-md-3" routerLink="/">Clear</button>
+                    </div>
+                </form> -->
+            
+                <form [formGroup]="angForm" novalidate>
+                    
+                    <div class="form-group">
+                        <label> Amount</label>
+                        <input formControlName="price" type="number" placeholder="Amount in Rupees" required class="form-control">
+                        <div *ngIf="angForm.controls['price'].invalid && angForm.controls['price'].touched" class="alert-danger">Amount is Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label> Date</label>
+                        <input formControlName="date" type="text" placeholder="Date" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label> Select Category</label>
+                        <select formControlName="category" (change)="onSelectingCategory($event.target.value)" required class="form-control">
+                            <option value="Select category">Select category</option>
+                            <option *ngFor="let category of categorys" [value]="category.categoryId">{{category.categoryName}}
+                            </option>
+                        </select>
+                        <div *ngIf="(angForm.controls['category'].invalid ||angForm.controls['category'].value==='Select category') && angForm.controls['category'].touched" class="alert-danger">Category is Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label> Select Sub Category</label>
+                        <select formControlName="subcategory" required class="form-control">
+                            <option value="Select category">Select Sub category</option>
+                            <option *ngFor="let subcategory of subCategories" [value]="subcategory.subCategoryId">
+                                {{subcategory.subCategoryName}}</option>
+                        </select>
+                        <div *ngIf="(angForm.controls['subcategory'].invalid ||angForm.controls['subcategory'].value==='Select category') && angForm.controls['subcategory'].touched" class="alert-danger">SubCategory is Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select formControlName="type" name="select" required class="form-control">
+                            <option value="Income">Income</option>
+                            <option value="Expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Purpose of Expense/ Income Source</label>
+                        <textarea formControlName="description" style="resize: none;" cols="30" rows="1" class="form-control" required
+                            placeholder="Description"></textarea>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-dark mt-3 mr-4 col-md-3"(click)="onExpenseSubmit()" [disabled]="angForm.invalid || angForm.controls['subcategory'].value==='Select category' " routerLink="/" >Submit</button>
+                        <button type="submit" class="btn btn-dark mt-3 ml-4  col-md-3" routerLink="/" (click)="this.alertService.warn('details unsaved',options)">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

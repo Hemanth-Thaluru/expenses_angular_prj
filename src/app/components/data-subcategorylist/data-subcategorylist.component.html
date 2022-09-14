@@ -1,0 +1,35 @@
+<h1 class="text-white">SubCategory List</h1>
+<hr>
+<table class="table table-bordered table-hover table-dark table-striped table-hover">
+    <thead   >
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col" style="width:15%;">Sub ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col" style="width:40%;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            *ngFor="let subCategory of subCategories;">
+            <td>{{subCategory.subCategoryId}}</td>
+            <td>{{subCategory.categoryIdOfSub}}</td>
+            <td>{{subCategory.subCategoryName}}</td>
+            <td>{{subCategory.subcategoryDescription}}</td>
+            <td>
+                <button class="btn btn-danger ml-2" (click)="deleteSubCategory(subCategory)" >
+                    Delete
+                </button>
+                <button class="btn btn-warning ml-2" [routerLink]="['addSubCategory']" [state]="subCategory">
+                    Edit
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="row" >
+    <div class="col-md-11">
+        <button  class="btn btn-dark adcat" id="categoryAdd" [routerLink]="['addSubCategory']">Add</button>
+    </div>
+</div>

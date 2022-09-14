@@ -1,0 +1,47 @@
+<h1 class="text-white">Expense List</h1>
+<hr>
+
+<div class="div">
+    <table class="table table-bordered table-hover table-dark table-striped table-hover shadow round"  >
+        <thead  >
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col">Type</th>
+                <th scope="col">Category</th>
+                <th scope="col" style="width:5%;">SubCategory</th>
+                <th scope="col">Purpose</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let data of datas; let i=index;">
+                <td>{{i+1}}</td>
+                <td> ₹ {{data.price}}</td>
+                <td>{{data.date}}</td>  
+                <td>{{data.type}}</td>
+                <td>{{data.category}}</td>
+                <td>{{data.subcategory}}</td>
+                <td>{{data.description}}</td>
+                <td>
+                    <button class="btn btn-danger ml-2" (click)="dataDelete(data)">
+                        Delete
+                    </button>
+                    <button class="btn btn-warning ml-2" [routerLink]="['addExpense']" [state]="data" >
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="row" >
+    <div class="col-md-11">
+        <button  class="btn btn-dark adcat" id="categoryAdd" [routerLink]="['addExpense']">Add</button>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+
+<app-navigation> </app-navigation>
+
+<div class="p-3">
+  <div class="row">
+
+    <div class="col-sm-3">
+      <br><br><br>
+      <div class="card pt-1">
+        <div class="card-body">
+          <div class="pt-2 pb-3">
+            <button class="btn btn-dark btn-block mt-1" (click)="onClickChange('Expense')" [routerLink]="['']" >Manage Expense</button>
+            <button class="btn btn-dark btn-block mt-3" (click)="onClickChange('Category')" [routerLink]="['category']" >Manage Category </button>
+            <button class="btn btn-dark btn-block mt-3" (click)="onClickChange('SubCategory')" [routerLink]="['subCategory']"  >Manage SubCategory</button>
+          </div>
+        </div>
+      </div>
+
+    
+    </div>
+    
+    <div class="col-sm-9 text-center">
+      <alert></alert>
+      <router-outlet></router-outlet>
+      
+    </div>
+  </div>
+</div>

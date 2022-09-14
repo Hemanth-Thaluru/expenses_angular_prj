@@ -1,0 +1,36 @@
+<h1 class="text-white">Category List</h1>
+<hr>
+<table class="table table-bordered table-hover table-dark table-striped table-hover">
+    <thead  >
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            *ngFor="let category of categories;">
+            <td>{{category.categoryId}}</td>
+            <td>{{category.categoryName}}</td>
+            <td>{{category.categoryDescription}}</td>
+            <td>
+                <button class="btn btn-danger ml-2" (click)="deleteCategory(category)" >
+                    Delete
+                </button>
+                <button class="btn btn-warning ml-2" [routerLink]="['addCategory']" [state]="category" >
+                    Edit
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="row" >
+    <div class="col-md-11">
+        <button  class="btn btn-dark adcat" id="categoryAdd" [routerLink]="['addCategory']">Add</button>
+    </div>
+</div>
+
+
+
