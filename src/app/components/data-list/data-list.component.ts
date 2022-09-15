@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { Data } from '../../models/Data';
 import { Category } from 'src/app/models/Category';
-import { AnyMxRecord } from 'dns';
+
+import { SubCategory } from 'src/app/models/SubCategory';
 
 
 @Component({
@@ -17,8 +18,9 @@ export class DataListComponent implements OnInit {
   datas: Data[];
   checkData:boolean=false;
   categories:Category[];
-  ctname;string;
-  ct:any;
+  subcategories:SubCategory[];
+  ctname:string;
+ 
 
   constructor(
     public dataService: DataService,
@@ -27,21 +29,19 @@ export class DataListComponent implements OnInit {
   ngOnInit() {
     this.datas = this.dataService.getDatas();
     this.categories=this.dataService.getCategorys();
-    this.newModel();
+    this.subcategories=this.dataService.getSubcategories();
+    this.filteringFunction();
   }
 
-  newModel(){
+  filteringFunction(){
     let i=0
     for(let data of this.datas){
-      this.ct[i]=this.ct[i].push(data)
-      for(let category of this.categories)
-      {
-        if(data.category===String(category.categoryId))
-        {this.ct[i].push(category.categoryName)}
-      }
-      i++;
+      this.ctname=this.categories.filter(x=>x.categoryId==Number(data.category))[0].categoryName
+      data.category=this.ctname;
+      this.ctname=this.subcategories.filter(x=>x.subCategoryId=Number(data.subcategory))[0].subCategoryName
+      data.subcategory=this.ctname;
     }
-    console.log('ctname:'+this.ct);
+    
   }
 
   dataDelete(data: Data) {

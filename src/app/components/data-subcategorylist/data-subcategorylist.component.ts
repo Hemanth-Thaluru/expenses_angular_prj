@@ -22,15 +22,6 @@ export class DataSubcategorylistComponent implements OnInit {
 
   }
 
-  catName(){
-
-    for(let sub of this.subCategories){
-      this.catname=this.cat.find(x=>x.categoryId==sub.categoryIdOfSub).categoryName;
-      console.log('sub:'+this.catname);
-    }
-    
-  }
-
   deleteSubCategory(subCategory:SubCategory){
     this.dataservice.subCategoryDelete(subCategory);
   }

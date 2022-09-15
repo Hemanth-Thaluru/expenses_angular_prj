@@ -57,21 +57,6 @@ export class DataFormComponent implements OnInit {
 
   }
 
-  // addData(newPrice: HTMLInputElement, newDate: HTMLInputElement, newCategory: HTMLInputElement, newType: HTMLInputElement, newDescription: HTMLInputElement) {
-  //   this.taskService.addData({
-  //     price: newPrice.value,
-  //     date: newDate.value,
-  //     category: newCategory.value,
-  //     type: newType.value,
-  //     description: newDescription.value,
-  //   });
-  //   newPrice.value = '';
-  //   newDescription.value = '';
-  //   newDate.value = '';
-  //   newPrice.focus();
-
-  //   return false;
-  // }
 
   onExpenseSubmit(){
     this.taskService.addData({
