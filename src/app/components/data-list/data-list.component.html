@@ -17,16 +17,16 @@
         </thead>
         <tbody>
             <tr
-                *ngFor="let data of datas; let i=index;">
+                *ngFor="let data of expenselist1; let i=index;">
                 <td>{{i+1}}</td>
                 <td> ₹ {{data.price}}</td>
                 <td>{{data.date}}</td>  
                 <td>{{data.type}}</td>
-                <td>{{data.category}}</td>
-                <td>{{data.subcategory}}</td>
+                <td>{{data.categoryname}}</td>
+                <td>{{data.subcategoryname}}</td>
                 <td>{{data.description}}</td>
                 <td>
-                    <button class="btn btn-danger ml-2" (click)="dataDelete(data)">
+                    <button class="btn btn-danger ml-2" (click)="dataDelete(data)" >
                         Delete
                     </button>
                     <button class="btn btn-warning ml-2" [routerLink]="['addExpense']" [state]="data" >

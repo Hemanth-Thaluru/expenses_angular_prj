@@ -52,7 +52,7 @@
                 <form [formGroup]="angForm" novalidate>
                     
                     <div class="form-group">
-                        <label> Amount</label>
+                        <label> Amount<span class="required">*</span> </label>
                         <input formControlName="price" type="number" placeholder="Amount in Rupees" required class="form-control">
                         <div *ngIf="angForm.controls['price'].invalid && angForm.controls['price'].touched" class="alert-danger">Amount is Required</div>
                     </div>
@@ -61,7 +61,7 @@
                         <input formControlName="date" type="text" placeholder="Date" required class="form-control">
                     </div>
                     <div class="form-group">
-                        <label> Select Category</label>
+                        <label> Select Category<span class="required">*</span></label>
                         <select formControlName="category" (change)="onSelectingCategory($event.target.value)" required class="form-control">
                             <option value="Select category">Select category</option>
                             <option *ngFor="let category of categorys" [value]="category.categoryId">{{category.categoryName}}
@@ -70,7 +70,7 @@
                         <div *ngIf="(angForm.controls['category'].invalid ||angForm.controls['category'].value==='Select category') && angForm.controls['category'].touched" class="alert-danger">Category is Required</div>
                     </div>
                     <div class="form-group">
-                        <label> Select Sub Category</label>
+                        <label> Select Sub Categor<span class="required">*</span> </label>
                         <select formControlName="subcategory" required class="form-control">
                             <option value="Select category">Select Sub category</option>
                             <option *ngFor="let subcategory of subCategories" [value]="subcategory.subCategoryId">

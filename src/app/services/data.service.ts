@@ -61,9 +61,9 @@ export class DataService {
     }
   }
 
-  dataDelete(data: Data) {
+  dataDelete(data: any) {
     for (let i = 0; i < this.datas.length; i++) {
-      if (data == this.datas[i]) {
+      if (data.description == this.datas[i].description) {
         this.datas.splice(i, 1);
         sessionStorage.setItem('datas', JSON.stringify(this.datas));
       }
@@ -114,7 +114,6 @@ export class DataService {
 
   getCategorys() {
     if (sessionStorage.getItem('categorys') === null) {
-      console.log(this.categorys);
       return this.categorys;
     } else {
       this.categorys = JSON.parse(sessionStorage.getItem('categorys'));
@@ -173,7 +172,6 @@ export class DataService {
       return this.subCategories;
     } else {
       this.subCategories = JSON.parse(sessionStorage.getItem('subCategories'));
-      console.log(this.subCategories);
       return this.subCategories;
     }
   }
