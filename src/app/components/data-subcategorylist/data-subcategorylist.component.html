@@ -4,7 +4,7 @@
     <thead   >
         <tr>
             <th scope="col">ID</th>
-            <th scope="col" style="width:15%;">Category</th>
+            <th scope="col" style="width:15%;">Sub ID</th>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col" style="width:40%;">Action</th>
@@ -12,9 +12,9 @@
     </thead>
     <tbody>
         <tr
-            *ngFor="let subCategory of subCategories;">
+            *ngFor="let subCategory of subCategories; let i=index;">
             <td>{{subCategory.subCategoryId}}</td>
-            <td>{{subCategory.categoryIdOfSub}}</td>
+            <td>{{subcategorylist1[i].categoryName}}</td>
             <td>{{subCategory.subCategoryName}}</td>
             <td>{{subCategory.subcategoryDescription}}</td>
             <td>

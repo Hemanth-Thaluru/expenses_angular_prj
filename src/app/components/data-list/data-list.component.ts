@@ -39,9 +39,9 @@ export class DataListComponent implements OnInit {
 
   filteringFunction(){
     for(let data of this.datas){
-      this.ctname=this.categories.filter(x=>x.categoryId==Number(data.category))[0].categoryName
+      this.ctname=this.categories.filter(x=>x.categoryId==1)[0].categoryName
       console.log('subcat:'+this.subcategories1[0].subCategoryId)
-      this.sctname=this.subcategories1.filter(x=>x.subCategoryId==data.subcategory)[0].subCategoryName
+      this.sctname=this.subcategories1.filter(x=>x.subCategoryId==1)[0].subCategoryName
       this.expense={
         price: data.price,date: data.date,
         type: data.type,category: data.category,
