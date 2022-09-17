@@ -5,16 +5,22 @@ import { Data } from '../models/Data';
 import { Category } from '../models/Category';
 
 import { SubCategory } from '../models/SubCategory';
+import { SubCategoryList } from '../models/SubCategoryList';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class DataService {
   datas: Data[];
 
   categorys: Category[];
 
   subCategories: SubCategory[];
+  subcategorylist:SubCategoryList;
+  subcategorieslist:SubCategoryList[];
+
+  str : string;
 
   cid: number;
   subid: number;
@@ -25,6 +31,7 @@ export class DataService {
     this.subCategories = [];
 
     this.categorys = [];
+    this.subcategorieslist=[];
   }
 
   getDatas() {
@@ -61,9 +68,9 @@ export class DataService {
     }
   }
 
-  dataDelete(data: Data) {
+  dataDelete(data: any) {
     for (let i = 0; i < this.datas.length; i++) {
-      if (data == this.datas[i]) {
+      if (data== this.datas[i]) {
         this.datas.splice(i, 1);
         sessionStorage.setItem('datas', JSON.stringify(this.datas));
       }
@@ -79,16 +86,6 @@ export class DataService {
     }
   }
 
-  // categoryEdit(categoryData:Category){
-  //   for (let i = 0; i < this.categorys.length; i++) {
-  //     if (categoryData.categoryId == this.categorys[i].categoryId) {
-  //       this.categorys[i].categoryName=categoryData.categoryName;
-  //       this.categorys[i].categoryDescription=categoryData.categoryDescription;
-  //       sessionStorage.setItem('categorys', JSON.stringify(this.categorys));
-  //     }
-  //   }
-  // }
-
   subCategoryDelete(subCategoryData: SubCategory) {
     for (let i = 0; i < this.subCategories.length; i++) {
       if (subCategoryData == this.subCategories[i]) {
@@ -101,20 +98,8 @@ export class DataService {
     }
   }
 
-  // editSubCategory(subCategoryData:SubCategory){
-  //   for (let i = 0; i < this.subCategories.length; i++) {
-  //     if (subCategoryData.subCategoryId == this.subCategories[i].subCategoryId) {
-  //       this.subCategories[i].subCategoryName=subCategoryData.subCategoryName
-  //       this.subCategories[i].categoryIdOfSub=subCategoryData.categoryIdOfSub
-  //       this.subCategories[i].subcategoryDescription=subCategoryData.subCategoryName
-  //       sessionStorage.setItem('subCategories', JSON.stringify(this.subCategories));
-  //     }
-  //   }
-  // }
-
   getCategorys() {
     if (sessionStorage.getItem('categorys') === null) {
-      console.log(this.categorys);
       return this.categorys;
     } else {
       this.categorys = JSON.parse(sessionStorage.getItem('categorys'));
@@ -173,8 +158,30 @@ export class DataService {
       return this.subCategories;
     } else {
       this.subCategories = JSON.parse(sessionStorage.getItem('subCategories'));
-      console.log(this.subCategories);
       return this.subCategories;
     }
   }
+
+  catName(){
+    let str1:any
+    let scl:SubCategoryList[]=[];
+    console.log("cate:"+this.categorys[0].categoryId)
+    for(let sub of this.subCategories){
+      str1='55'
+     str1=this.categorys.find(x=>{return x.categoryId==sub.categoryIdOfSub});
+     console.log('catname:'+typeof(str1))
+     str1=(str1==undefined?'NA!':str1.categoryName)
+     console.log('catname:'+str1)
+     this.subcategorylist={
+       subCategoryId:sub.subCategoryId,
+       categoryName:str1,
+       categoryIdOfSub:sub.categoryIdOfSub,
+       subCategoryName:sub.subCategoryName,
+       subcategoryDescription:sub.subcategoryDescription
+     }
+     scl.push(this.subcategorylist);
+   }
+   console.log('catname metod executed!')
+   return scl
+ }
 }

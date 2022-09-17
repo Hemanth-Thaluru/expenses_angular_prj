@@ -22,11 +22,11 @@
                 <td> ₹ {{data.price}}</td>
                 <td>{{data.date}}</td>  
                 <td>{{data.type}}</td>
-                <td>{{data.category}}</td>
-                <td>{{data.subcategory}}</td>
+                <td>{{expenselist1[i].categoryname}}</td>
+                <td>{{expenselist1[i].subcategoryname}}</td>
                 <td>{{data.description}}</td>
                 <td>
-                    <button class="btn btn-danger ml-2" (click)="dataDelete(data)">
+                    <button class="btn btn-danger ml-2" (click)="dataDelete(data)" >
                         Delete
                     </button>
                     <button class="btn btn-warning ml-2" [routerLink]="['addExpense']" [state]="data" >

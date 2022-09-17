@@ -57,7 +57,6 @@ export class DataFormComponent implements OnInit {
 
   }
 
-
   onExpenseSubmit(){
     this.taskService.addData({
     price: this.angForm.get('price').value,

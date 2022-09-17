@@ -2,8 +2,8 @@ export interface Data {
     price: string;
     date: string;
     type: string;
-    category: string;
-    subcategory:string;
+    category: number;
+    subcategory:number;
     description: string;
 }
 
