@@ -23,7 +23,7 @@ export class DataService {
   str: string;
   cid: number;
   subid: number;
-  readonly baseURL = 'http://localhost:2339/api/';
+  readonly baseURL = 'https://localhost:44352/api/Categories';
   constructor(private http: HttpClient) {
     this.datas = [];
 
@@ -124,7 +124,14 @@ export class DataService {
         }
       }
       categorys.push(category);
-      this.http.post(this.baseURL, category).subscribe(
+      let ct:any
+      ct={
+        ID:4,
+        Name:category.categoryName,
+        Description:category.categoryDescription
+      }
+      console.log('noodles')
+      this.http.post(this.baseURL, ct).subscribe(
         (res) => {
           console.log("Sucess-congrats")
         },
