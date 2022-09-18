@@ -7,31 +7,30 @@ import { Category } from '../models/Category';
 import { SubCategory } from '../models/SubCategory';
 import { SubCategoryList } from '../models/SubCategoryList';
 
+import { HttpClient } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root',
 })
-
 export class DataService {
   datas: Data[];
 
   categorys: Category[];
 
   subCategories: SubCategory[];
-  subcategorylist:SubCategoryList;
-  subcategorieslist:SubCategoryList[];
-
-  str : string;
-
+  subcategorylist: SubCategoryList;
+  subcategorieslist: SubCategoryList[];
+  str: string;
   cid: number;
   subid: number;
-
-  constructor() {
+  readonly baseURL = 'http://localhost:2339/api/';
+  constructor(private http: HttpClient) {
     this.datas = [];
 
     this.subCategories = [];
 
     this.categorys = [];
-    this.subcategorieslist=[];
+    this.subcategorieslist = [];
   }
 
   getDatas() {
@@ -70,7 +69,7 @@ export class DataService {
 
   dataDelete(data: any) {
     for (let i = 0; i < this.datas.length; i++) {
-      if (data== this.datas[i]) {
+      if (data == this.datas[i]) {
         this.datas.splice(i, 1);
         sessionStorage.setItem('datas', JSON.stringify(this.datas));
       }
@@ -108,7 +107,6 @@ export class DataService {
   }
 
   addCategory(category: Category) {
-    console.log('add:' + category.categoryId);
     this.categorys.push(category);
     let categorys: Category[] = [];
     if (sessionStorage.getItem('categorys') === null) {
@@ -121,10 +119,19 @@ export class DataService {
           categorys[i].categoryName = category.categoryName;
           categorys[i].categoryDescription = category.categoryDescription;
           sessionStorage.setItem('categorys', JSON.stringify(categorys));
+
           return;
         }
       }
       categorys.push(category);
+      this.http.post(this.baseURL, category).subscribe(
+        (res) => {
+          console.log("Sucess-congrats")
+        },
+        (error) => {
+          console.log("Error msg:"+error);
+        }
+      );
       sessionStorage.setItem('categorys', JSON.stringify(categorys));
     }
   }
@@ -162,22 +169,24 @@ export class DataService {
     }
   }
 
-  catName(){
-    let str1:any
-    let scl:SubCategoryList[]=[];
-    for(let sub of this.subCategories){
-     str1=this.categorys.find(x=>{return x.categoryId==sub.categoryIdOfSub});
-     str1=(str1==undefined?'NA!':str1.categoryName)
-     this.subcategorylist={
-       subCategoryId:sub.subCategoryId,
-       categoryName:str1,
-       categoryIdOfSub:sub.categoryIdOfSub,
-       subCategoryName:sub.subCategoryName,
-       subcategoryDescription:sub.subcategoryDescription
-     }
-     scl.push(this.subcategorylist);
-   }
-   console.log('catname metod executed!')
-   return scl
- }
+  catName() {
+    let str1: any;
+    let scl: SubCategoryList[] = [];
+    for (let sub of this.subCategories) {
+      str1 = this.categorys.find((x) => {
+        return x.categoryId == sub.categoryIdOfSub;
+      });
+      str1 = str1 == undefined ? 'NA!' : str1.categoryName;
+      this.subcategorylist = {
+        subCategoryId: sub.subCategoryId,
+        categoryName: str1,
+        categoryIdOfSub: sub.categoryIdOfSub,
+        subCategoryName: sub.subCategoryName,
+        subcategoryDescription: sub.subcategoryDescription,
+      };
+      scl.push(this.subcategorylist);
+    }
+    console.log('catname metod executed!');
+    return scl;
+  }
 }

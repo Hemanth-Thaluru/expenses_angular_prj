@@ -18,6 +18,7 @@ import { DataCategorylistComponent } from './components/data-categorylist/data-c
 import { DataSubcategorylistComponent } from './components/data-subcategorylist/data-subcategorylist.component';
 import { RouterModule } from '@angular/router';
 import { AlertModule } from './_alert';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AlertModule } from './_alert';
     FormsModule,
     ReactiveFormsModule,
     AlertModule,
+    HttpClientModule,
   
     RouterModule.forRoot([
       {path: '', component: DataListComponent},
