@@ -27,24 +27,24 @@ export class DataSubcategorylistComponent implements OnInit {
     // this.catName()
   }
 
-  catName(){
-    console.log('catnamefunc')
-     for(let sub of this.subCategories){
-      this.catname=this.cat.find(x=>x.categoryId==sub.categoryIdOfSub).categoryName;
-      console.log('catna'+this.catname)
-      this.scl={
-        subCategoryId:sub.subCategoryId,
-        categoryName:this.catname,
-        categoryIdOfSub:sub.categoryIdOfSub,
-        subCategoryName:sub.subCategoryName,
-        subcategoryDescription:sub.subcategoryDescription
-      }
-      this.subcategorylist1.push(this.scl);
-    }
-  }
+  // catName(){
+  //   console.log('catnamefunc')
+  //    for(let sub of this.subCategories){
+  //     this.catname=this.cat.find(x=>x.categoryId==sub.categoryIdOfSub).categoryName;
+  //     console.log('catna'+this.catname)
+  //     this.scl={
+  //       subCategoryId:sub.subCategoryId,
+  //       categoryName:this.catname,
+  //       categoryIdOfSub:sub.categoryIdOfSub,
+  //       subCategoryName:sub.subCategoryName,
+  //       subcategoryDescription:sub.subcategoryDescription
+  //     }
+  //     this.subcategorylist1.push(this.scl);
+  //   }
+  // }
 
   deleteSubCategory(subCategory:SubCategory){
-    console.log('deletefn:'+subCategory)
+
     this.dataservice.subCategoryDelete(subCategory);
   }
 }

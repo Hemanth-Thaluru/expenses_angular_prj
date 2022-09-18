@@ -37,20 +37,6 @@ export class DataCategoryComponent implements OnInit {
   }
 
 
-  // addCategory(newCategoryName: HTMLInputElement, newCategoryDescription: HTMLInputElement) {
-  //   this.categorys = this.categoryService.getCategorys();
-  //   this.categoryid=this.categorys.length + 1
-  //   this.categoryService.addCategory({
-  //     categoryId:this.categoryid,
-  //     categoryName: newCategoryName.value,
-  //     categoryDescription: newCategoryDescription.value
-  //   });
-  //   newCategoryName.value = "";
-  //   newCategoryDescription.value = '';
-  //   newCategoryName.focus();
-  //   return false;
-  // }
-
   createForm(){
     this.angForm = this.fb.group({
       categoryName: [history.state.categoryName, Validators.required ],

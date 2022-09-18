@@ -165,13 +165,9 @@ export class DataService {
   catName(){
     let str1:any
     let scl:SubCategoryList[]=[];
-    console.log("cate:"+this.categorys[0].categoryId)
     for(let sub of this.subCategories){
-      str1='55'
      str1=this.categorys.find(x=>{return x.categoryId==sub.categoryIdOfSub});
-     console.log('catname:'+typeof(str1))
      str1=(str1==undefined?'NA!':str1.categoryName)
-     console.log('catname:'+str1)
      this.subcategorylist={
        subCategoryId:sub.subCategoryId,
        categoryName:str1,

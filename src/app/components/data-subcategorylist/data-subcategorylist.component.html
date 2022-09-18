@@ -4,8 +4,8 @@
     <thead   >
         <tr>
             <th scope="col">ID</th>
-            <th scope="col" style="width:15%;">Sub ID</th>
-            <th scope="col">Name</th>
+            <th scope="col" style="width:25%;">Name</th>
+            <th scope="col">Category</th>
             <th scope="col">Description</th>
             <th scope="col" style="width:40%;">Action</th>
         </tr>
@@ -14,8 +14,8 @@
         <tr
             *ngFor="let subCategory of subCategories; let i=index;">
             <td>{{subCategory.subCategoryId}}</td>
-            <td>{{subcategorylist1[i].categoryName}}</td>
             <td>{{subCategory.subCategoryName}}</td>
+            <td>{{subcategorylist1[i].categoryName}}</td>
             <td>{{subCategory.subcategoryDescription}}</td>
             <td>
                 <button class="btn btn-danger ml-2" (click)="deleteSubCategory(subCategory)" >
