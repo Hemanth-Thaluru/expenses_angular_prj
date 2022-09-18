@@ -44,7 +44,7 @@ export class DataSubcategorylistComponent implements OnInit {
   // }
 
   deleteSubCategory(subCategory:SubCategory){
-    console.log('deletefn:'+subCategory)
+
     this.dataservice.subCategoryDelete(subCategory);
   }
 }

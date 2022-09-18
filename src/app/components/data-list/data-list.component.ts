@@ -34,23 +34,22 @@ export class DataListComponent implements OnInit {
   }
 
   filteringFunction() {
+    let catname: any;
+    let subname: any;
     for (let data of this.datas) {
-      this.ctname = this.categories.filter(
-        (x) => x.categoryId == 1
-      )[0].categoryName;
-      console.log('subcat:' + this.subcategories1[0].subCategoryId);
-      this.sctname = this.subcategories1.filter(
-        (x) => x.subCategoryId == 1
-      )[0].subCategoryName;
+      catname = this.categories.find((x) => {
+        return x.categoryId == data.category;
+      });
+      catname = (catname == undefined ? 'NA' : catname.categoryName);
+      subname = this.subcategories1.find((x)=>{
+        return x.subCategoryId==data.subcategory
+      });
+      subname = (subname == undefined ? 'NA' : subname.subCategoryName);
       this.expense = {
-        price: data.price,
-        date: data.date,
-        type: data.type,
         category: data.category,
-        categoryname: this.ctname,
+        categoryname: catname,
         subcategory: data.subcategory,
-        subcategoryname: this.sctname,
-        description: data.description,
+        subcategoryname: subname,
       };
       this.expenselist1.push(this.expense);
       console.log('ans:' + this.expense);
