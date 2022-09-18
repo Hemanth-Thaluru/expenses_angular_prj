@@ -17,7 +17,6 @@ import { DataSubCategoryComponent } from './components/data-sub-category/data-su
 import { DataCategorylistComponent } from './components/data-categorylist/data-categorylist.component';
 import { DataSubcategorylistComponent } from './components/data-subcategorylist/data-subcategorylist.component';
 import { RouterModule } from '@angular/router';
-import { DataAddCategoryComponent } from './components/data-add-category/data-add-category.component';
 import { AlertModule } from './_alert';
 
 @NgModule({
@@ -30,7 +29,7 @@ import { AlertModule } from './_alert';
     DataSubCategoryComponent,
     DataCategorylistComponent,
     DataSubcategorylistComponent,
-    DataAddCategoryComponent,
+
   
 
   ],
@@ -47,7 +46,6 @@ import { AlertModule } from './_alert';
       {path: 'addExpense', component: DataFormComponent},
       {path: 'category', component: DataCategorylistComponent},
       {path: 'category/addCategory', component: DataCategoryComponent},
-      {path: 'addcategory', component: DataAddCategoryComponent},
       {path: 'subCategory', component: DataSubcategorylistComponent},
       {path: 'subCategory/addSubCategory', component: DataSubCategoryComponent},
     
