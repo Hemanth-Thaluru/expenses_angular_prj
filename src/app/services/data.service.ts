@@ -23,7 +23,7 @@ export class DataService {
   str: string;
   cid: number;
   subid: number;
-  readonly baseURL = 'http://localhost:2339/api/';
+  readonly baseURL = 'https://jsonplaceholder.typicode.com/posts/1'
   constructor(private http: HttpClient) {
     this.datas = [];
 
@@ -35,11 +35,21 @@ export class DataService {
 
   getDatas() {
     if (sessionStorage.getItem('datas') === null) {
+      this.http.get(this.baseURL).subscribe(
+        (res) => {
+          console.log(res)
+        },
+        (error) => {
+          console.log("Error msg:"+error);
+        }
+      );
       return this.datas;
     } else {
       this.datas = JSON.parse(sessionStorage.getItem('datas'));
       return this.datas;
     }
+
+    
   }
 
   addData(data: Data) {
