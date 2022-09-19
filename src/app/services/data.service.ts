@@ -35,11 +35,21 @@ export class DataService {
 
   getDatas() {
     if (sessionStorage.getItem('datas') === null) {
+      this.http.get(this.baseURL).subscribe(
+        (res) => {
+          console.log(res)
+        },
+        (error) => {
+          console.log("Error msg:"+error);
+        }
+      );
       return this.datas;
     } else {
       this.datas = JSON.parse(sessionStorage.getItem('datas'));
       return this.datas;
     }
+
+    
   }
 
   addData(data: Data) {
@@ -124,14 +134,7 @@ export class DataService {
         }
       }
       categorys.push(category);
-      let ct:any
-      ct={
-        ID:4,
-        Name:category.categoryName,
-        Description:category.categoryDescription
-      }
-      console.log('noodles')
-      this.http.post(this.baseURL, ct).subscribe(
+      this.http.post(this.baseURL, category).subscribe(
         (res) => {
           console.log("Sucess-congrats")
         },
