@@ -35,8 +35,8 @@ export class DataFormComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.categorys = this.categoryService.getCategorys();
-    this.subCategories = this.categoryService.getSubcategories();
+    this.categoryService.getCategorys().subscribe((x:Category[])=>this.categorys=x);
+    this.categoryService.getSubcategories().subscribe((x)=>this.subCategories=x);
   }
 
   createForm(){
@@ -52,8 +52,8 @@ export class DataFormComponent implements OnInit {
 
   onSelectingCategory(categoryId: any) {
 
-    this.subCategories = this.categoryService.getSubcategories();
-    this.subCategories = this.subCategories.filter(item => item.categoryIdOfSub === categoryId);
+    this.categoryService.getSubcategories().subscribe((x)=>this.subCategories=x);
+    this.subCategories = this.subCategories.filter(item => item.categoryId === categoryId);
 
   }
 

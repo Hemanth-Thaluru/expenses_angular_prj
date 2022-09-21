@@ -12,17 +12,18 @@ export class DataCategorylistComponent implements OnInit {
   categories:Category[];
 
   constructor(public dataservice:DataService) { 
-    console.log('cat ctr');
+    this.categories=[];
+    this.dataservice.getCategorys().subscribe((x:Category[])=>this.categories=x);
   }
 
   ngOnInit(): void {
-    this.categories=this.dataservice.getCategorys();
-    console.log('ng cat')
+    this.dataservice.getCategorys().subscribe((x:Category[])=>this.categories=x);
   }
   deleteCategory(categoryData:Category){
     if (confirm('Are you sure? it will delete this record permanently !!')) {
       this.dataservice.categoryDelete(categoryData);
-      console.log('deletemethod')
+      window.location.reload()
     }
   }
+
 }

@@ -12,11 +12,11 @@
     <tbody>
         <tr
             *ngFor="let category of categories;">
-            <td>{{category.categoryId}}</td>
-            <td>{{category.categoryName}}</td>
-            <td>{{category.categoryDescription}}</td>
+            <td>{{category.id}}</td>
+            <td>{{category.name}}</td>
+            <td>{{category.description}}</td>
             <td>
-                <button class="btn btn-danger ml-2" (click)="deleteCategory(category)" >
+                <button class="btn btn-danger ml-2" (click)="deleteCategory(category)  " >
                     Delete
                 </button>
                 <button class="btn btn-warning ml-2" [routerLink]="['addCategory']" [state]="category" >

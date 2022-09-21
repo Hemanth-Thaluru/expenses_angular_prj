@@ -17,13 +17,14 @@ export class DataSubcategorylistComponent implements OnInit {
   scl:SubCategoryList;
   subcategorylist1:SubCategoryList[];
   constructor(public dataservice:DataService) { 
-    this.subcategorylist1=[]
+    this.subcategorylist1=[];
+    this.dataservice.getSubcategories().subscribe((x)=>this.subCategories=x);
   }
 
   ngOnInit(): void {
-    this.subCategories=this.dataservice.getSubcategories();
-    this.cat=this.dataservice.getCategorys();
-    this.subcategorylist1=this.dataservice.catName();
+    this.dataservice.getSubcategories().subscribe((x)=>this.subCategories=x);
+    this.dataservice.getCategorys().subscribe((x:Category[])=>this.cat=x);
+    this.subcategorylist1=this.catName();
   }
 
 
@@ -31,4 +32,28 @@ export class DataSubcategorylistComponent implements OnInit {
 
     this.dataservice.subCategoryDelete(subCategory);
   }
+
+  catName() {
+    let str1: any;
+    let scl1: SubCategoryList[] = [];
+    let scl:SubCategoryList;
+    // for (let sub of this.subCategories) {
+    //   // str1 = this.cat.find((x) => {
+    //   //   return x.id == sub.categoryId;
+    //   // });
+    //   // str1 = str1 == undefined ? 'NA!' : str1.name;
+    //   // this.scl = {
+    //   //   subCategoryId: sub.id,
+    //   //   categoryName: str1,
+    //   //   categoryIdOfSub: sub.categoryId,
+    //   //   subCategoryName: sub.name,
+    //   //   subcategoryDescription: sub.description,
+    //   // };
+    //   // scl1.push(this.scl);
+    // }
+    console.log('catname metod executed!');
+    return scl1;
+  }
+
+
 }

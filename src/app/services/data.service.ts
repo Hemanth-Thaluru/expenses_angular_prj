@@ -8,6 +8,8 @@ import { SubCategory } from '../models/SubCategory';
 import { SubCategoryList } from '../models/SubCategoryList';
 
 import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -23,31 +25,33 @@ export class DataService {
   str: string;
   cid: number;
   subid: number;
-  readonly baseURL = 'https://localhost:44352/api/Categories';
+  readonly baseURLCategories = 'https://localhost:44391/api/Categories/';
+  readonly baseURLSubCategories = 'https://localhost:44391/api/SubCategories/';
   constructor(private http: HttpClient) {
     this.datas = [];
-
     this.subCategories = [];
-
     this.categorys = [];
     this.subcategorieslist = [];
   }
 
   getDatas() {
-    if (sessionStorage.getItem('datas') === null) {
-      this.http.get(this.baseURL).subscribe(
+    // if (sessionStorage.getItem('datas') === null) {
+      this.http.get(this.baseURLCategories+'GetAllCategories').subscribe(
         (res) => {
-          console.log(res)
+          console.log(res); 
+          console.log("before return in category")
+          return res;
         },
         (error) => {
           console.log("Error msg:"+error);
         }
       );
+      console.log("before return")
       return this.datas;
-    } else {
-      this.datas = JSON.parse(sessionStorage.getItem('datas'));
-      return this.datas;
-    }
+    // } else {
+    //   this.datas = JSON.parse(sessionStorage.getItem('datas'));
+    //   return this.datas;
+    // }
 
     
   }
@@ -82,17 +86,20 @@ export class DataService {
       if (data == this.datas[i]) {
         this.datas.splice(i, 1);
         sessionStorage.setItem('datas', JSON.stringify(this.datas));
+        
       }
     }
   }
 
   categoryDelete(categoryData: Category) {
-    for (let i = 0; i < this.categorys.length; i++) {
-      if (categoryData == this.categorys[i]) {
-        this.categorys.splice(i, 1);
-        sessionStorage.setItem('categorys', JSON.stringify(this.categorys));
-      }
-    }
+    // for (let i = 0; i < this.categorys.length; i++) {
+    //   if (categoryData == this.categorys[i]) {
+    //     this.categorys.splice(i, 1);
+    //     sessionStorage.setItem('categorys', JSON.stringify(this.categorys));
+    //   }
+    // }
+    this.http.delete(this.baseURLCategories+'DeleteCategory/'+[categoryData.id]).subscribe(x=>console.log("deleted sucessfully"));
+    
   }
 
   subCategoryDelete(subCategoryData: SubCategory) {
@@ -108,33 +115,31 @@ export class DataService {
   }
 
   getCategorys() {
-    if (sessionStorage.getItem('categorys') === null) {
-      return this.categorys;
-    } else {
-      this.categorys = JSON.parse(sessionStorage.getItem('categorys'));
-      return this.categorys;
-    }
+    return this.http.get<Category[]>(this.baseURLCategories+'GetAllCategories');
   }
+
+ 
 
   addCategory(category: Category) {
     this.categorys.push(category);
-    let categorys: Category[] = [];
-    if (sessionStorage.getItem('categorys') === null) {
-      categorys.push(category);
-      sessionStorage.setItem('categorys', JSON.stringify(categorys));
-    } else {
-      categorys = JSON.parse(sessionStorage.getItem('categorys'));
-      for (let i = 0; i < categorys.length; i++) {
-        if (category.categoryId == this.categorys[i].categoryId) {
-          categorys[i].categoryName = category.categoryName;
-          categorys[i].categoryDescription = category.categoryDescription;
-          sessionStorage.setItem('categorys', JSON.stringify(categorys));
+    // let categorys: Category[] = [];
+    // if (sessionStorage.getItem('categorys') === null) {
+    //   categorys.push(category);
+    //   sessionStorage.setItem('categorys', JSON.stringify(categorys));
+    // } else {
+    //   categorys = JSON.parse(sessionStorage.getItem('categorys'));
+    //   for (let i = 0; i < categorys.length; i++) {
+    //     if (category.id == this.categorys[i].id) {
+    //       categorys[i].name = category.name;
+    //       categorys[i].description = category.description;
+    //       sessionStorage.setItem('categorys', JSON.stringify(categorys));
 
-          return;
-        }
-      }
-      categorys.push(category);
-      this.http.post(this.baseURL, category).subscribe(
+    //       return;
+    //     }
+    //   }
+    //   categorys.push(category);
+     
+    this.http.post(this.baseURLCategories+'Addcategory',{name:category.name,description:category.description}).subscribe(
         (res) => {
           console.log("Sucess-congrats")
         },
@@ -142,9 +147,22 @@ export class DataService {
           console.log("Error msg:"+error);
         }
       );
-      sessionStorage.setItem('categorys', JSON.stringify(categorys));
+      // sessionStorage.setItem('categorys', JSON.stringify(categorys));
     }
-  }
+
+    editCategory(category: Category) {
+      console.log("catid:"+category.id)
+      this.http.put(this.baseURLCategories+'UpdateCategoryById/'+[category.id],category).subscribe(
+          (res) => {
+            this.categorys[2]=category;
+            console.log("Sucess-congrats")
+          },
+          (error) => {
+            console.log("Error msg:"+error);
+          }
+        );
+      }
+
 
   addSubCategory(subCategory: SubCategory) {
     this.subCategories.push(subCategory);
@@ -155,7 +173,7 @@ export class DataService {
     } else {
       subCategories = JSON.parse(sessionStorage.getItem('subCategories'));
       for (let i = 0; i < this.subCategories.length; i++) {
-        if (subCategory.subCategoryId == this.subCategories[i].subCategoryId) {
+        if (subCategory.id == this.subCategories[i].id) {
           subCategories[i] = subCategory;
           sessionStorage.setItem(
             'subCategories',
@@ -170,13 +188,12 @@ export class DataService {
     }
   }
 
+  editSubCategory(subCategory:SubCategory){
+     this.http.put(this.baseURLSubCategories+'UpdateSubCategoryById/'+[subCategory.id],subCategory).subscribe();
+  }
+
   getSubcategories() {
-    if (sessionStorage.getItem('subCategories') === null) {
-      return this.subCategories;
-    } else {
-      this.subCategories = JSON.parse(sessionStorage.getItem('subCategories'));
-      return this.subCategories;
-    }
+    return this.http.get<SubCategory[]>(this.baseURLSubCategories+'GetAllSubCategories');
   }
 
   catName() {
@@ -184,15 +201,15 @@ export class DataService {
     let scl: SubCategoryList[] = [];
     for (let sub of this.subCategories) {
       str1 = this.categorys.find((x) => {
-        return x.categoryId == sub.categoryIdOfSub;
+        return x.id == sub.categoryId;
       });
-      str1 = str1 == undefined ? 'NA!' : str1.categoryName;
+      str1 = str1 == undefined ? 'NA!' : str1.name;
       this.subcategorylist = {
-        subCategoryId: sub.subCategoryId,
+        subCategoryId: sub.id,
         categoryName: str1,
-        categoryIdOfSub: sub.categoryIdOfSub,
-        subCategoryName: sub.subCategoryName,
-        subcategoryDescription: sub.subcategoryDescription,
+        categoryIdOfSub: sub.categoryId,
+        subCategoryName: sub.name,
+        subcategoryDescription: sub.description,
       };
       scl.push(this.subcategorylist);
     }

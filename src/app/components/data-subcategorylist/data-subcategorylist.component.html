@@ -13,10 +13,10 @@
     <tbody>
         <tr
             *ngFor="let subCategory of subCategories; let i=index;">
-            <td>{{subCategory.subCategoryId}}</td>
-            <td>{{subCategory.subCategoryName}}</td>
-            <td>{{subcategorylist1[i].categoryName}}</td>
-            <td>{{subCategory.subcategoryDescription}}</td>
+            <td>{{subCategory.id}}</td>
+            <td>{{subCategory.name}}</td>
+            <td>{{subCategory.categoryId}}</td>
+            <td>{{subCategory.description}}</td>
             <td>
                 <button class="btn btn-danger ml-2" (click)="deleteSubCategory(subCategory)" >
                     Delete

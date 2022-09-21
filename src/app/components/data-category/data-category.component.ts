@@ -32,28 +32,35 @@ export class DataCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categorys = this.categoryService.getCategorys();
-    this.categoryid=this.categorys.length + 1
+    this.categoryService.getCategorys().subscribe((x:Category[])=>this.categorys=x);
   }
 
 
   createForm(){
     this.angForm = this.fb.group({
-      categoryName: [history.state.categoryName, Validators.required ],
-      categoryDescription: [history.state.categoryDescription, Validators.required ]
+      categoryName: [history.state.name, Validators.required ],
+      categoryDescription: [history.state.description, Validators.required ]
    }); 
   }
 
   onCategorySubmit(){
-   
-    this.categorys = this.categoryService.getCategorys();
-    this.categoryid=  history.state.categoryId===undefined?(this.categorys.length + 1):history.state.categoryId
-    this.categoryService.addCategory({
-      categoryId:this.categoryid,
-      categoryName: this.angForm.get('categoryName').value,
-      categoryDescription: this.angForm.get('categoryDescription').value
-    });
-    history.state.categoryId === undefined ? this.alertService.success('Category Added!!',this.options) : this.alertService.success('Category Edited Sucessfully!',this.options)
+    let k=0
+    this.categoryService.getCategorys().subscribe((x:Category[])=>this.categorys=x);
+    this.categoryid= history.state.id===undefined?(k=1):history.state.id
+   if(k==0){ this.categoryService.editCategory({
+      id:this.categoryid,
+      name: this.angForm.get('categoryName').value,
+      description: this.angForm.get('categoryDescription').value
+    });}
+    if(k==1)
+    {
+      this.categoryService.addCategory({
+        id:1,
+        name: this.angForm.get('categoryName').value,
+        description: this.angForm.get('categoryDescription').value
+      });
+    }
+    history.state.id === undefined ? this.alertService.success('Category Added!!',this.options) : this.alertService.success('Category Edited Sucessfully!',this.options)
     this.angForm.reset()
   }
 

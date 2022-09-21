@@ -37,35 +37,42 @@ export class DataSubCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subCategories = this.dataServices.getSubcategories();
-    this.categories = this.dataServices.getCategorys();
+    this.dataServices
+      .getSubcategories()
+      .subscribe((x) => (this.subCategories = x));
+    this.dataServices.getCategorys().subscribe((x) => (this.categories = x));
   }
 
   createForm() {
     this.angForm = this.fb.group({
-      subCategoryName: [history.state.subCategoryName, Validators.required],
-      categoryIdOfSub: [history.state.categoryIdOfSub, Validators.required],
-      subcategoryDescription: [
-        history.state.subcategoryDescription,
-        Validators.required,
-      ],
+      subCategoryName: [history.state.name, Validators.required],
+      categoryIdOfSub: [history.state.categoryId, Validators.required],
+      subcategoryDescription: [history.state.description, Validators.required],
     });
   }
 
   onSubCategorySubmit() {
-    this.subCategories = this.dataServices.getSubcategories();
+    let k = 0;
+    this.dataServices
+      .getSubcategories()
+      .subscribe((x) => (this.subCategories = x));
 
-    this.subcategoryid =
-      history.state.subCategoryId === undefined
-        ? this.subCategories.length + 1
-        : history.state.subCategoryId;
-    this.dataServices.addSubCategory({
-      subCategoryId: this.subcategoryid,
-      categoryIdOfSub: this.angForm.get('categoryIdOfSub').value,
-      subCategoryName: this.angForm.get('subCategoryName').value,
-      subcategoryDescription: this.angForm.get('subcategoryDescription').value,
-    });
-    history.state.subCategoryId === undefined
+    if (typeof (history.state.id)== undefined) {
+      this.dataServices.addSubCategory({
+        id: this.subcategoryid,
+        categoryId: this.angForm.get('categoryIdOfSub').value,
+        name: this.angForm.get('subCategoryName').value,
+        description: this.angForm.get('subcategoryDescription').value,
+      });
+    } else {
+      this.dataServices.editSubCategory({
+        id: history.state.id,
+        categoryId: this.angForm.get('categoryIdOfSub').value,
+        name: this.angForm.get('subCategoryName').value,
+        description: this.angForm.get('subcategoryDescription').value,
+      });
+    }
+    history.state.id === undefined
       ? this.alertService.success('SubCategory Added!!', this.options)
       : this.alertService.success(
           'SubCategory Edited Sucessfully!',

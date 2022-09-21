@@ -28,8 +28,8 @@ export class DataListComponent implements OnInit {
 
   ngOnInit() {
     this.datas = this.dataService.getDatas();
-    this.categories = this.dataService.getCategorys();
-    this.subcategories1 = this.dataService.getSubcategories();
+    this.dataService.getCategorys().subscribe((x)=>this.categories=x);
+    this.dataService.getSubcategories().subscribe((x)=>this.subcategories1=x);;
     this.expenselist1 = this.filteringFunction();
   }
 
@@ -38,11 +38,11 @@ export class DataListComponent implements OnInit {
     let subname: any;
     for (let data of this.datas) {
       catname = this.categories.find((x) => {
-        return x.categoryId == data.category;
+        return x.id == data.category;
       });
       catname = (catname == undefined ? 'NA' : catname.categoryName);
       subname = this.subcategories1.find((x)=>{
-        return x.subCategoryId==data.subcategory
+        return x.id==data.subcategory
       });
       subname = (subname == undefined ? 'NA' : subname.subCategoryName);
       this.expense = {
@@ -60,6 +60,7 @@ export class DataListComponent implements OnInit {
   dataDelete(data: ExpenseList) {
     if (confirm('Are you sure? it will delete this record permanently !!')) {
       this.dataService.dataDelete(data);
+      this.dataService.getCategorys().subscribe((x)=>this.categories=x);
     }
   }
 }

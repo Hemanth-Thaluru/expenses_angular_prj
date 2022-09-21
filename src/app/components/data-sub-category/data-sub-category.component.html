@@ -7,80 +7,45 @@
         <form [formGroup]="angForm" novalidate>
           <div class="form-group">
             <label> Add Sub Category<span class="required">*</span></label>
-            <input
-              formControlName="subCategoryName"
-              type="text"
-              placeholder="Add Sub Category"
-              class="form-control"
-            />
-            <div
-              *ngIf="
+            <input formControlName="subCategoryName" type="text" placeholder="Add Sub Category" class="form-control" />
+            <div *ngIf="
                 angForm.controls['subCategoryName'].invalid &&
                 angForm.controls['subCategoryName'].touched
-              "
-              class="alert-danger"
-            >
+              " class="alert-danger">
               Name is Required
             </div>
           </div>
           <div class="form-group">
             <label> Select Category<span class="required">*</span></label>
-            <select
-              formControlName="categoryIdOfSub"
-              required
-              class="form-control"
-              value="Select category"
-            >
+            <select formControlName="categoryIdOfSub" required class="form-control" value="Select category">
               <option>Select category</option>
-              <option
-                *ngFor="let category of categories"
-                [value]="category.categoryId"
-              >
-                {{ category.categoryName }}
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
               </option>
             </select>
-            <div
-              *ngIf="
+            <div *ngIf="
                 (angForm.controls['categoryIdOfSub'].invalid ||
                   angForm.controls['categoryIdOfSub'].value ===
                     'Select category') &&
                 angForm.controls['categoryIdOfSub'].touched
-              "
-              class="alert-danger"
-            >
+              " class="alert-danger">
               Category is Required
             </div>
           </div>
           <div class="form-group">
             <label>SubCategory Description</label>
-            <textarea
-              cols="30"
-              rows="1"
-              style="resize: none"
-              class="form-control"
-              formControlName="subcategoryDescription"
-              placeholder="Sub Category Description"
-            ></textarea>
+            <textarea cols="30" rows="1" style="resize: none" class="form-control"
+              formControlName="subcategoryDescription" placeholder="Sub Category Description"></textarea>
           </div>
           <div class="row justify-content-center">
-            <button
-              type="submit"
-              class="btn btn-dark mt-3 mr-3 col-md-3"
-              [disabled]="
+            <button type="submit" class="btn btn-dark mt-3 mr-3 col-md-3" [disabled]="
                 angForm.controls['subCategoryName'].invalid ||
                 angForm.controls['categoryIdOfSub'].value === 'Select category'
-              "
-              (click)="onSubCategorySubmit()"
-              routerLink="/subCategory"
-            >
+              " (click)="onSubCategorySubmit()" routerLink="/subCategory">
               Submit
             </button>
-            <button
-              type="submit"
-              class="btn btn-dark mt-3 ml-3 col-md-3"
-              routerLink="/subCategory"
-              (click)="alertService.warn('details not saved', options)"
-            >
+            <button type="submit" class="btn btn-dark mt-3 ml-3 col-md-3" routerLink="/subCategory"
+              (click)="alertService.warn('details not saved', options)">
               Cancel
             </button>
           </div>
